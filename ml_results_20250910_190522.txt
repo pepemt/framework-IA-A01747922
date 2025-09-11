@@ -1,0 +1,437 @@
+                Ejecutando validación cruzada con 10 folds en todos los datasets...                 
+Fecha y hora: 2025-09-10 19:05:22
+======================================================================================================================================================
+
+
+######################################################################################################################################################
+                                                                     IRIS DATASET                                                                     
+######################################################################################################################################################
+
+
+============================================================
+COMPARACIÓN: EVALUACIÓN SIMPLE vs VALIDACIÓN CRUZADA
+============================================================
+
+1. EVALUACIÓN SIMPLE (Train/Test Split):
+
+=== RandomForest ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+
+=== SVM ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+
+=== LogisticRegression ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+
+2. VALIDACIÓN CRUZADA (10 folds):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.86666667]
+Media: 0.9533 (+/- 0.1041)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.93333333]
+Media: 0.9600 (+/- 0.0884)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.86666667]
+Media: 0.9533 (+/- 0.1041)
+Rango: [0.8667, 1.0000]
+
+============================================================
+RESUMEN COMPARATIVO:
+============================================================
+Modelo               Simple     CV Media   CV Std     Diferencia
+------------------------------------------------------------
+RandomForest         1.0000     0.9533     0.0521     0.0467    
+SVM                  1.0000     0.9600     0.0442     0.0400    
+LogisticRegression   1.0000     0.9533     0.0521     0.0467    
+
+======================================================================================================================================================
+                      COMPARACIÓN: MODELOS BASE vs OPTIMIZADOS CON GRIDSEARCH                       
+======================================================================================================================================================
+
+1. MODELOS BASE (parámetros por defecto):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         0.93333333 0.93333333 0.86666667]
+Media: 0.9467 (+/- 0.0998)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.93333333]
+Media: 0.9600 (+/- 0.0884)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.86666667]
+Media: 0.9533 (+/- 0.1041)
+Rango: [0.8667, 1.0000]
+
+2. MODELOS OPTIMIZADOS (GridSearch):
+
+====================================================================================================
+                                      GRID SEARCH CON 10 FOLDS                                      
+====================================================================================================
+
+--- Optimizando RandomForest ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'bootstrap': True, 'max_depth': 10, 'min_samples_leaf': 2, 'min_samples_split': 10, 'n_estimators': 50}
+Mejor score: 0.9600
+Mejora sobre modelo base: 0.0106
+
+--- Optimizando SVM ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'C': 100, 'degree': 2, 'gamma': 'scale', 'kernel': 'linear'}
+Mejor score: 0.9733
+Mejora sobre modelo base: 0.1001
+
+--- Optimizando LogisticRegression ---
+Fitting 10 folds for each of 90 candidates, totalling 900 fits
+Mejores parámetros: {'C': 100, 'max_iter': 2000, 'penalty': 'l1', 'solver': 'saga'}
+Mejor score: 0.9800
+Mejora sobre modelo base: 0.1121
+
+======================================================================================================================================================
+                                                                 RESUMEN COMPARATIVO:                                                                 
+======================================================================================================================================================
+Modelo               Base CV      Optimizado   Mejora       Mejora %    
+--------------------------------------------------------------------------------
+RandomForest         0.9467       0.9600       0.0133       1.41        %
+SVM                  0.9600       0.9733       0.0133       1.39        %
+LogisticRegression   0.9533       0.9800       0.0267       2.80        %
+
+######################################################################################################################################################
+                                                                     WINE DATASET                                                                     
+######################################################################################################################################################
+
+
+============================================================
+COMPARACIÓN: EVALUACIÓN SIMPLE vs VALIDACIÓN CRUZADA
+============================================================
+
+1. EVALUACIÓN SIMPLE (Train/Test Split):
+
+=== RandomForest ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        14
+           1       1.00      1.00      1.00        14
+           2       1.00      1.00      1.00         8
+
+    accuracy                           1.00        36
+   macro avg       1.00      1.00      1.00        36
+weighted avg       1.00      1.00      1.00        36
+
+
+=== SVM ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        14
+           1       1.00      1.00      1.00        14
+           2       1.00      1.00      1.00         8
+
+    accuracy                           1.00        36
+   macro avg       1.00      1.00      1.00        36
+weighted avg       1.00      1.00      1.00        36
+
+
+=== LogisticRegression ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        14
+           1       1.00      1.00      1.00        14
+           2       1.00      1.00      1.00         8
+
+    accuracy                           1.00        36
+   macro avg       1.00      1.00      1.00        36
+weighted avg       1.00      1.00      1.00        36
+
+
+2. VALIDACIÓN CRUZADA (10 folds):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         0.94444444 1.         1.         0.94444444 1.
+ 1.         0.88888889 1.         1.        ]
+Media: 0.9778 (+/- 0.0737)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.88888889 1.         1.         0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0711)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         0.94444444 1.         0.94444444 0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0509)
+Rango: [0.9444, 1.0000]
+
+============================================================
+RESUMEN COMPARATIVO:
+============================================================
+Modelo               Simple     CV Media   CV Std     Diferencia
+------------------------------------------------------------
+RandomForest         1.0000     0.9778     0.0369     0.0222    
+SVM                  1.0000     0.9833     0.0356     0.0167    
+LogisticRegression   1.0000     0.9833     0.0255     0.0167    
+
+======================================================================================================================================================
+                      COMPARACIÓN: MODELOS BASE vs OPTIMIZADOS CON GRIDSEARCH                       
+======================================================================================================================================================
+
+1. MODELOS BASE (parámetros por defecto):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         0.94444444 1.         1.         0.94444444 1.
+ 1.         0.88888889 1.         1.        ]
+Media: 0.9778 (+/- 0.0737)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.88888889 1.         1.         0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0711)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         0.94444444 1.         0.94444444 0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0509)
+Rango: [0.9444, 1.0000]
+
+2. MODELOS OPTIMIZADOS (GridSearch):
+
+====================================================================================================
+                                      GRID SEARCH CON 10 FOLDS                                      
+====================================================================================================
+
+--- Optimizando RandomForest ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'bootstrap': True, 'max_depth': None, 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 50}
+Mejor score: 0.9944
+Mejora sobre modelo base: 0.0146
+
+--- Optimizando SVM ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'C': 10, 'degree': 2, 'gamma': 0.001, 'kernel': 'rbf'}
+Mejor score: 0.9889
+Mejora sobre modelo base: 0.1260
+
+--- Optimizando LogisticRegression ---
+Fitting 10 folds for each of 90 candidates, totalling 900 fits
+Mejores parámetros: {'C': 0.1, 'max_iter': 1000, 'penalty': 'l2', 'solver': 'saga'}
+Mejor score: 0.9889
+Mejora sobre modelo base: 0.0698
+
+======================================================================================================================================================
+                                                                 RESUMEN COMPARATIVO:                                                                 
+======================================================================================================================================================
+Modelo               Base CV      Optimizado   Mejora       Mejora %    
+--------------------------------------------------------------------------------
+RandomForest         0.9778       0.9944       0.0167       1.70        %
+SVM                  0.9833       0.9889       0.0056       0.56        %
+LogisticRegression   0.9833       0.9889       0.0056       0.56        %
+
+######################################################################################################################################################
+                                                                BREAST CANCER DATASET                                                                 
+######################################################################################################################################################
+
+
+============================================================
+COMPARACIÓN: EVALUACIÓN SIMPLE vs VALIDACIÓN CRUZADA
+============================================================
+
+1. EVALUACIÓN SIMPLE (Train/Test Split):
+
+=== RandomForest ===
+Accuracy: 0.9649
+              precision    recall  f1-score   support
+
+           0       0.98      0.93      0.95        43
+           1       0.96      0.99      0.97        71
+
+    accuracy                           0.96       114
+   macro avg       0.97      0.96      0.96       114
+weighted avg       0.97      0.96      0.96       114
+
+
+=== SVM ===
+Accuracy: 0.9825
+              precision    recall  f1-score   support
+
+           0       1.00      0.95      0.98        43
+           1       0.97      1.00      0.99        71
+
+    accuracy                           0.98       114
+   macro avg       0.99      0.98      0.98       114
+weighted avg       0.98      0.98      0.98       114
+
+
+=== LogisticRegression ===
+Accuracy: 0.9737
+              precision    recall  f1-score   support
+
+           0       0.98      0.95      0.96        43
+           1       0.97      0.99      0.98        71
+
+    accuracy                           0.97       114
+   macro avg       0.97      0.97      0.97       114
+weighted avg       0.97      0.97      0.97       114
+
+
+2. VALIDACIÓN CRUZADA (10 folds):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [0.94736842 0.98245614 0.96491228 0.9122807  0.94736842 0.96491228
+ 0.96491228 0.94736842 0.94736842 1.        ]
+Media: 0.9579 (+/- 0.0449)
+Rango: [0.9123, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.98245614 0.94736842 0.96491228 0.96491228 0.96491228
+ 1.         0.94736842 0.98245614 1.        ]
+Media: 0.9754 (+/- 0.0391)
+Rango: [0.9474, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [0.98245614 0.98245614 0.94736842 0.96491228 0.98245614 0.94736842
+ 1.         0.98245614 0.98245614 1.        ]
+Media: 0.9772 (+/- 0.0353)
+Rango: [0.9474, 1.0000]
+
+============================================================
+RESUMEN COMPARATIVO:
+============================================================
+Modelo               Simple     CV Media   CV Std     Diferencia
+------------------------------------------------------------
+RandomForest         0.9649     0.9579     0.0225     0.0070    
+SVM                  0.9825     0.9754     0.0195     0.0070    
+LogisticRegression   0.9737     0.9772     0.0176     0.0035    
+
+======================================================================================================================================================
+                      COMPARACIÓN: MODELOS BASE vs OPTIMIZADOS CON GRIDSEARCH                       
+======================================================================================================================================================
+
+1. MODELOS BASE (parámetros por defecto):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [0.94736842 0.98245614 0.96491228 0.89473684 0.94736842 0.94736842
+ 0.94736842 0.96491228 0.92982456 1.        ]
+Media: 0.9526 (+/- 0.0545)
+Rango: [0.8947, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.98245614 0.94736842 0.96491228 0.96491228 0.96491228
+ 1.         0.94736842 0.98245614 1.        ]
+Media: 0.9754 (+/- 0.0391)
+Rango: [0.9474, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [0.98245614 0.98245614 0.94736842 0.96491228 0.98245614 0.94736842
+ 1.         0.98245614 0.98245614 1.        ]
+Media: 0.9772 (+/- 0.0353)
+Rango: [0.9474, 1.0000]
+
+2. MODELOS OPTIMIZADOS (GridSearch):
+
+====================================================================================================
+                                      GRID SEARCH CON 10 FOLDS                                      
+====================================================================================================
+
+--- Optimizando RandomForest ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'bootstrap': False, 'max_depth': 20, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 50}
+Mejor score: 0.9667
+Mejora sobre modelo base: 0.0125
+
+--- Optimizando SVM ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'C': 10, 'degree': 2, 'gamma': 'scale', 'kernel': 'rbf'}
+Mejor score: 0.9772
+Mejora sobre modelo base: 0.0838
+
+--- Optimizando LogisticRegression ---
+Fitting 10 folds for each of 90 candidates, totalling 900 fits
+Mejores parámetros: {'C': 0.1, 'max_iter': 1000, 'penalty': 'l2', 'solver': 'liblinear'}
+Mejor score: 0.9807
+Mejora sobre modelo base: 0.0164
+
+======================================================================================================================================================
+                                                                 RESUMEN COMPARATIVO:                                                                 
+======================================================================================================================================================
+Modelo               Base CV      Optimizado   Mejora       Mejora %    
+--------------------------------------------------------------------------------
+RandomForest         0.9526       0.9667       0.0140       1.47        %
+SVM                  0.9754       0.9772       0.0018       0.18        %
+LogisticRegression   0.9772       0.9807       0.0035       0.36        %
+
+======================================================================================================================================================
+                                                          ¡ANÁLISIS COMPLETADO EXITOSAMENTE!                                                          
+======================================================================================================================================================
