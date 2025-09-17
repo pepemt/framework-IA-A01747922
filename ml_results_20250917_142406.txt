@@ -1,0 +1,819 @@
+                Ejecutando validación cruzada con 10 folds en todos los datasets...                 
+Fecha y hora: 2025-09-17 14:24:06
+======================================================================================================================================================
+
+
+######################################################################################################################################################
+                                                                     IRIS DATASET                                                                     
+######################################################################################################################################################
+
+
+============================================================
+COMPARACIÓN: EVALUACIÓN SIMPLE vs VALIDACIÓN CRUZADA
+============================================================
+
+1. EVALUACIÓN SIMPLE (Train/Test Split):
+
+=== RandomForest ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+
+Generando gráfica para RandomForest...
+Gráfica guardada como: randomforest_iris_predictions.png
+Precisión del modelo RandomForest: 1.0000
+
+=== SVM ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+
+Generando gráfica para SVM...
+Gráfica guardada como: svm_iris_predictions.png
+Precisión del modelo SVM: 1.0000
+
+=== LogisticRegression ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+
+Generando gráfica para LogisticRegression...
+Gráfica guardada como: logisticregression_iris_predictions.png
+Precisión del modelo LogisticRegression: 1.0000
+
+2. VALIDACIÓN CRUZADA (10 folds):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.86666667]
+Media: 0.9533 (+/- 0.1041)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.93333333]
+Media: 0.9600 (+/- 0.0884)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.86666667]
+Media: 0.9533 (+/- 0.1041)
+Rango: [0.8667, 1.0000]
+
+============================================================
+RESUMEN COMPARATIVO:
+============================================================
+Modelo               Simple     CV Media   CV Std     Diferencia
+------------------------------------------------------------
+RandomForest         1.0000     0.9533     0.0521     0.0467    
+SVM                  1.0000     0.9600     0.0442     0.0400    
+LogisticRegression   1.0000     0.9533     0.0521     0.0467    
+
+======================================================================================================================================================
+                      COMPARACIÓN: MODELOS BASE vs OPTIMIZADOS CON GRIDSEARCH                       
+======================================================================================================================================================
+
+1. MODELOS BASE (parámetros por defecto):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.86666667]
+Media: 0.9533 (+/- 0.1041)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.93333333]
+Media: 0.9600 (+/- 0.0884)
+Rango: [0.8667, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         1.         1.         0.93333333 0.86666667 0.93333333
+ 1.         1.         0.93333333 0.86666667]
+Media: 0.9533 (+/- 0.1041)
+Rango: [0.8667, 1.0000]
+
+2. MODELOS OPTIMIZADOS (GridSearch):
+
+====================================================================================================
+                                      GRID SEARCH CON 10 FOLDS                                      
+====================================================================================================
+
+--- Optimizando RandomForest ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'bootstrap': True, 'max_depth': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 50}
+Mejor score: 0.9600
+Mejora sobre modelo base: 0.0104
+
+--- Optimizando SVM ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'C': 100, 'degree': 2, 'gamma': 'scale', 'kernel': 'linear'}
+Mejor score: 0.9733
+Mejora sobre modelo base: 0.1001
+
+--- Optimizando LogisticRegression ---
+Fitting 10 folds for each of 90 candidates, totalling 900 fits
+Mejores parámetros: {'C': 100, 'max_iter': 2000, 'penalty': 'l1', 'solver': 'saga'}
+Mejor score: 0.9800
+Mejora sobre modelo base: 0.1122
+
+======================================================================================================================================================
+                                                                 RESUMEN COMPARATIVO:                                                                 
+======================================================================================================================================================
+Modelo               Base CV      Optimizado   Mejora       Mejora %    
+--------------------------------------------------------------------------------
+RandomForest         0.9533       0.9600       0.0067       0.70        %
+SVM                  0.9600       0.9733       0.0133       1.39        %
+LogisticRegression   0.9533       0.9800       0.0267       2.80        %
+
+======================================================================================================================================================
+                                                        ANÁLISIS DETALLADO DE HIPERPARÁMETROS                                                         
+======================================================================================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - RANDOMFOREST - IRIS
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+bootstrap                 True                 True                 SIN CAMBIO     
+max_depth                 None                 None                 SIN CAMBIO     
+min_samples_leaf          1                    2                    MODIFICADO     
+min_samples_split         2                    5                    MODIFICADO     
+n_estimators              100                  50                   MODIFICADO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 5
+Parámetros modificados: 3
+Parámetros sin cambio: 2
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • min_samples_leaf: +100.0%
+  • min_samples_split: +150.0%
+  • n_estimators: -50.0%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+🌲 RANDOM FOREST - Interpretación de cambios:
+  • n_estimators=50: Pocos árboles para velocidad (menor precisión)
+  • max_depth=None: Sin límite de profundidad (riesgo de overfitting)
+  • min_samples_split=5: División agresiva (mayor flexibilidad)
+
+================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - SVM - IRIS
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+C                         1.0                  100                  MODIFICADO     
+degree                    3                    2                    MODIFICADO     
+gamma                     scale                scale                SIN CAMBIO     
+kernel                    rbf                  linear               MODIFICADO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 4
+Parámetros modificados: 3
+Parámetros sin cambio: 1
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • C: +9900.0%
+  • degree: -33.3%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+🎯 SVM - Interpretación de cambios:
+  • C=100: Penalización alta (modelo más complejo, riesgo de overfitting)
+  • kernel=linear: Separación lineal (datos linealmente separables)
+  • gamma=scale: Escalado automático basado en varianza
+
+================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - LOGISTICREGRESSION - IRIS
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+C                         1.0                  100                  MODIFICADO     
+max_iter                  2000                 2000                 SIN CAMBIO     
+penalty                   l2                   l1                   MODIFICADO     
+solver                    lbfgs                saga                 MODIFICADO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 4
+Parámetros modificados: 3
+Parámetros sin cambio: 1
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • C: +9900.0%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+📊 LOGISTIC REGRESSION - Interpretación de cambios:
+  • C=100: Regularización débil (modelo más complejo)
+  • penalty=l1: Lasso (elimina características irrelevantes)
+  • solver=saga: Optimizado para datasets grandes
+
+================================================================================
+
+====================================================================================================
+TABLA RESUMEN DE HIPERPARÁMETROS OPTIMIZADOS - IRIS
+====================================================================================================
+
+Modelo               Mejor Score  Parámetros Optimizados                                      
+----------------------------------------------------------------------------------------------------
+RandomForest         0.9600       bootstrap=True, max_depth=None, min_samples_leaf=2, ...     
+SVM                  0.9733       C=100, degree=2, gamma=scale, kernel=linear                 
+LogisticRegression   0.9800       C=100, max_iter=2000, penalty=l1, solver=saga               
+
+ANÁLISIS DE PATRONES COMUNES                      
+--------------------------------------------------
+• Valor promedio de C (regularización): 100.00
+  → Los modelos prefieren regularización débil (modelos más complejos)
+• Kernel SVM seleccionado: linear
+  → Los datos son linealmente separables
+• Número de árboles en Random Forest: 50
+  → Pocos árboles suficientes (datos simples)
+
+====================================================================================================
+
+######################################################################################################################################################
+                                                                     WINE DATASET                                                                     
+######################################################################################################################################################
+
+
+============================================================
+COMPARACIÓN: EVALUACIÓN SIMPLE vs VALIDACIÓN CRUZADA
+============================================================
+
+1. EVALUACIÓN SIMPLE (Train/Test Split):
+
+=== RandomForest ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        14
+           1       1.00      1.00      1.00        14
+           2       1.00      1.00      1.00         8
+
+    accuracy                           1.00        36
+   macro avg       1.00      1.00      1.00        36
+weighted avg       1.00      1.00      1.00        36
+
+
+Generando gráfica para RandomForest...
+Gráfica guardada como: randomforest_wine_predictions.png
+Precisión del modelo RandomForest: 1.0000
+
+=== SVM ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        14
+           1       1.00      1.00      1.00        14
+           2       1.00      1.00      1.00         8
+
+    accuracy                           1.00        36
+   macro avg       1.00      1.00      1.00        36
+weighted avg       1.00      1.00      1.00        36
+
+
+Generando gráfica para SVM...
+Gráfica guardada como: svm_wine_predictions.png
+Precisión del modelo SVM: 1.0000
+
+=== LogisticRegression ===
+Accuracy: 1.0000
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        14
+           1       1.00      1.00      1.00        14
+           2       1.00      1.00      1.00         8
+
+    accuracy                           1.00        36
+   macro avg       1.00      1.00      1.00        36
+weighted avg       1.00      1.00      1.00        36
+
+
+Generando gráfica para LogisticRegression...
+Gráfica guardada como: logisticregression_wine_predictions.png
+Precisión del modelo LogisticRegression: 1.0000
+
+2. VALIDACIÓN CRUZADA (10 folds):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         0.94444444 1.         1.         1.         1.
+ 1.         0.88888889 1.         1.        ]
+Media: 0.9833 (+/- 0.0711)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.88888889 1.         1.         0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0711)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         0.94444444 1.         0.94444444 0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0509)
+Rango: [0.9444, 1.0000]
+
+============================================================
+RESUMEN COMPARATIVO:
+============================================================
+Modelo               Simple     CV Media   CV Std     Diferencia
+------------------------------------------------------------
+RandomForest         1.0000     0.9833     0.0356     0.0167    
+SVM                  1.0000     0.9833     0.0356     0.0167    
+LogisticRegression   1.0000     0.9833     0.0255     0.0167    
+
+======================================================================================================================================================
+                      COMPARACIÓN: MODELOS BASE vs OPTIMIZADOS CON GRIDSEARCH                       
+======================================================================================================================================================
+
+1. MODELOS BASE (parámetros por defecto):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [1.         0.94444444 1.         1.         1.         1.
+ 1.         0.88888889 1.         1.        ]
+Media: 0.9833 (+/- 0.0711)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.88888889 1.         1.         0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0711)
+Rango: [0.8889, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [1.         0.94444444 1.         0.94444444 0.94444444 1.
+ 1.         1.         1.         1.        ]
+Media: 0.9833 (+/- 0.0509)
+Rango: [0.9444, 1.0000]
+
+2. MODELOS OPTIMIZADOS (GridSearch):
+
+====================================================================================================
+                                      GRID SEARCH CON 10 FOLDS                                      
+====================================================================================================
+
+--- Optimizando RandomForest ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'bootstrap': True, 'max_depth': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 50}
+Mejor score: 0.9889
+Mejora sobre modelo base: 0.0097
+
+--- Optimizando SVM ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'C': 10, 'degree': 2, 'gamma': 0.001, 'kernel': 'rbf'}
+Mejor score: 0.9889
+Mejora sobre modelo base: 0.1260
+
+--- Optimizando LogisticRegression ---
+Fitting 10 folds for each of 90 candidates, totalling 900 fits
+Mejores parámetros: {'C': 0.1, 'max_iter': 1000, 'penalty': 'l2', 'solver': 'saga'}
+Mejor score: 0.9889
+Mejora sobre modelo base: 0.0697
+
+======================================================================================================================================================
+                                                                 RESUMEN COMPARATIVO:                                                                 
+======================================================================================================================================================
+Modelo               Base CV      Optimizado   Mejora       Mejora %    
+--------------------------------------------------------------------------------
+RandomForest         0.9833       0.9889       0.0056       0.56        %
+SVM                  0.9833       0.9889       0.0056       0.56        %
+LogisticRegression   0.9833       0.9889       0.0056       0.56        %
+
+======================================================================================================================================================
+                                                        ANÁLISIS DETALLADO DE HIPERPARÁMETROS                                                         
+======================================================================================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - RANDOMFOREST - WINE
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+bootstrap                 True                 True                 SIN CAMBIO     
+max_depth                 None                 None                 SIN CAMBIO     
+min_samples_leaf          1                    1                    SIN CAMBIO     
+min_samples_split         2                    2                    SIN CAMBIO     
+n_estimators              100                  50                   MODIFICADO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 5
+Parámetros modificados: 1
+Parámetros sin cambio: 4
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • n_estimators: -50.0%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+🌲 RANDOM FOREST - Interpretación de cambios:
+  • n_estimators=50: Pocos árboles para velocidad (menor precisión)
+  • max_depth=None: Sin límite de profundidad (riesgo de overfitting)
+  • min_samples_split=2: División agresiva (mayor flexibilidad)
+
+================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - SVM - WINE
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+C                         1.0                  10                   MODIFICADO     
+degree                    3                    2                    MODIFICADO     
+gamma                     scale                0.001                MODIFICADO     
+kernel                    rbf                  rbf                  SIN CAMBIO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 4
+Parámetros modificados: 3
+Parámetros sin cambio: 1
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • C: +900.0%
+  • degree: -33.3%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+🎯 SVM - Interpretación de cambios:
+  • C=10: Penalización alta (modelo más complejo, riesgo de overfitting)
+  • kernel=rbf: Separación no lineal (datos complejos)
+  • gamma=0.001: Influencia baja de puntos cercanos (modelo simple)
+
+================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - LOGISTICREGRESSION - WINE
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+C                         1.0                  0.1                  MODIFICADO     
+max_iter                  2000                 1000                 MODIFICADO     
+penalty                   l2                   l2                   SIN CAMBIO     
+solver                    lbfgs                saga                 MODIFICADO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 4
+Parámetros modificados: 3
+Parámetros sin cambio: 1
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • C: -90.0%
+  • max_iter: -50.0%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+📊 LOGISTIC REGRESSION - Interpretación de cambios:
+  • C=0.1: Regularización fuerte (modelo más simple)
+  • penalty=l2: Ridge (reduce impacto de características)
+  • solver=saga: Optimizado para datasets grandes
+
+================================================================================
+
+====================================================================================================
+TABLA RESUMEN DE HIPERPARÁMETROS OPTIMIZADOS - WINE
+====================================================================================================
+
+Modelo               Mejor Score  Parámetros Optimizados                                      
+----------------------------------------------------------------------------------------------------
+RandomForest         0.9889       bootstrap=True, max_depth=None, min_samples_leaf=1, ...     
+SVM                  0.9889       C=10, degree=2, gamma=0.001, kernel=rbf                     
+LogisticRegression   0.9889       C=0.1, max_iter=1000, penalty=l2, solver=saga               
+
+ANÁLISIS DE PATRONES COMUNES                      
+--------------------------------------------------
+• Valor promedio de C (regularización): 5.05
+  → Los modelos prefieren regularización débil (modelos más complejos)
+• Kernel SVM seleccionado: rbf
+  → Los datos requieren separación no lineal
+• Número de árboles en Random Forest: 50
+  → Pocos árboles suficientes (datos simples)
+
+====================================================================================================
+
+######################################################################################################################################################
+                                                                BREAST CANCER DATASET                                                                 
+######################################################################################################################################################
+
+
+============================================================
+COMPARACIÓN: EVALUACIÓN SIMPLE vs VALIDACIÓN CRUZADA
+============================================================
+
+1. EVALUACIÓN SIMPLE (Train/Test Split):
+
+=== RandomForest ===
+Accuracy: 0.9649
+              precision    recall  f1-score   support
+
+           0       0.98      0.93      0.95        43
+           1       0.96      0.99      0.97        71
+
+    accuracy                           0.96       114
+   macro avg       0.97      0.96      0.96       114
+weighted avg       0.97      0.96      0.96       114
+
+
+Generando gráfica para RandomForest...
+Gráfica guardada como: randomforest_breast cancer_predictions.png
+Precisión del modelo RandomForest: 0.9649
+
+=== SVM ===
+Accuracy: 0.9825
+              precision    recall  f1-score   support
+
+           0       1.00      0.95      0.98        43
+           1       0.97      1.00      0.99        71
+
+    accuracy                           0.98       114
+   macro avg       0.99      0.98      0.98       114
+weighted avg       0.98      0.98      0.98       114
+
+
+Generando gráfica para SVM...
+Gráfica guardada como: svm_breast cancer_predictions.png
+Precisión del modelo SVM: 0.9825
+
+=== LogisticRegression ===
+Accuracy: 0.9737
+              precision    recall  f1-score   support
+
+           0       0.98      0.95      0.96        43
+           1       0.97      0.99      0.98        71
+
+    accuracy                           0.97       114
+   macro avg       0.97      0.97      0.97       114
+weighted avg       0.97      0.97      0.97       114
+
+
+Generando gráfica para LogisticRegression...
+Gráfica guardada como: logisticregression_breast cancer_predictions.png
+Precisión del modelo LogisticRegression: 0.9737
+
+2. VALIDACIÓN CRUZADA (10 folds):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [0.94736842 0.98245614 0.98245614 0.87719298 0.94736842 0.98245614
+ 0.96491228 0.94736842 0.92982456 1.        ]
+Media: 0.9561 (+/- 0.0670)
+Rango: [0.8772, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.98245614 0.94736842 0.96491228 0.96491228 0.96491228
+ 1.         0.94736842 0.98245614 1.        ]
+Media: 0.9754 (+/- 0.0391)
+Rango: [0.9474, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [0.98245614 0.98245614 0.94736842 0.96491228 0.98245614 0.94736842
+ 1.         0.98245614 0.98245614 1.        ]
+Media: 0.9772 (+/- 0.0353)
+Rango: [0.9474, 1.0000]
+
+============================================================
+RESUMEN COMPARATIVO:
+============================================================
+Modelo               Simple     CV Media   CV Std     Diferencia
+------------------------------------------------------------
+RandomForest         0.9649     0.9561     0.0335     0.0088    
+SVM                  0.9825     0.9754     0.0195     0.0070    
+LogisticRegression   0.9737     0.9772     0.0176     0.0035    
+
+======================================================================================================================================================
+                      COMPARACIÓN: MODELOS BASE vs OPTIMIZADOS CON GRIDSEARCH                       
+======================================================================================================================================================
+
+1. MODELOS BASE (parámetros por defecto):
+
+==================================================
+VALIDACIÓN CRUZADA CON 10 FOLDS
+==================================================
+
+--- Evaluando RandomForest ---
+Puntuaciones por fold: [0.94736842 0.98245614 0.98245614 0.87719298 0.94736842 0.96491228
+ 0.96491228 0.94736842 0.92982456 1.        ]
+Media: 0.9544 (+/- 0.0651)
+Rango: [0.8772, 1.0000]
+
+--- Evaluando SVM ---
+Puntuaciones por fold: [1.         0.98245614 0.94736842 0.96491228 0.96491228 0.96491228
+ 1.         0.94736842 0.98245614 1.        ]
+Media: 0.9754 (+/- 0.0391)
+Rango: [0.9474, 1.0000]
+
+--- Evaluando LogisticRegression ---
+Puntuaciones por fold: [0.98245614 0.98245614 0.94736842 0.96491228 0.98245614 0.94736842
+ 1.         0.98245614 0.98245614 1.        ]
+Media: 0.9772 (+/- 0.0353)
+Rango: [0.9474, 1.0000]
+
+2. MODELOS OPTIMIZADOS (GridSearch):
+
+====================================================================================================
+                                      GRID SEARCH CON 10 FOLDS                                      
+====================================================================================================
+
+--- Optimizando RandomForest ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'bootstrap': False, 'max_depth': 10, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100}
+Mejor score: 0.9684
+Mejora sobre modelo base: 0.0148
+
+--- Optimizando SVM ---
+Fitting 10 folds for each of 216 candidates, totalling 2160 fits
+Mejores parámetros: {'C': 10, 'degree': 2, 'gamma': 'scale', 'kernel': 'rbf'}
+Mejor score: 0.9772
+Mejora sobre modelo base: 0.0838
+
+--- Optimizando LogisticRegression ---
+Fitting 10 folds for each of 90 candidates, totalling 900 fits
+Mejores parámetros: {'C': 0.1, 'max_iter': 1000, 'penalty': 'l2', 'solver': 'liblinear'}
+Mejor score: 0.9807
+Mejora sobre modelo base: 0.0164
+
+======================================================================================================================================================
+                                                                 RESUMEN COMPARATIVO:                                                                 
+======================================================================================================================================================
+Modelo               Base CV      Optimizado   Mejora       Mejora %    
+--------------------------------------------------------------------------------
+RandomForest         0.9544       0.9684       0.0140       1.47        %
+SVM                  0.9754       0.9772       0.0018       0.18        %
+LogisticRegression   0.9772       0.9807       0.0035       0.36        %
+
+======================================================================================================================================================
+                                                        ANÁLISIS DETALLADO DE HIPERPARÁMETROS                                                         
+======================================================================================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - RANDOMFOREST - BREAST CANCER
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+bootstrap                 True                 False                MODIFICADO     
+max_depth                 None                 10                   MODIFICADO     
+min_samples_leaf          1                    1                    SIN CAMBIO     
+min_samples_split         2                    2                    SIN CAMBIO     
+n_estimators              100                  100                  SIN CAMBIO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 5
+Parámetros modificados: 2
+Parámetros sin cambio: 3
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • bootstrap: -100.0%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+🌲 RANDOM FOREST - Interpretación de cambios:
+  • n_estimators=100: Balance entre precisión y velocidad
+  • max_depth=10: Árboles poco profundos (previene overfitting)
+  • min_samples_split=2: División agresiva (mayor flexibilidad)
+
+================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - SVM - BREAST CANCER
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+C                         1.0                  10                   MODIFICADO     
+degree                    3                    2                    MODIFICADO     
+gamma                     scale                scale                SIN CAMBIO     
+kernel                    rbf                  rbf                  SIN CAMBIO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 4
+Parámetros modificados: 2
+Parámetros sin cambio: 2
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • C: +900.0%
+  • degree: -33.3%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+🎯 SVM - Interpretación de cambios:
+  • C=10: Penalización alta (modelo más complejo, riesgo de overfitting)
+  • kernel=rbf: Separación no lineal (datos complejos)
+  • gamma=scale: Escalado automático basado en varianza
+
+================================================================================
+
+================================================================================
+ANÁLISIS DE HIPERPARÁMETROS - LOGISTICREGRESSION - BREAST CANCER
+================================================================================
+
+Parámetro                 Valor Base           Valor Optimizado     Cambio         
+--------------------------------------------------------------------------------
+C                         1.0                  0.1                  MODIFICADO     
+max_iter                  2000                 1000                 MODIFICADO     
+penalty                   l2                   l2                   SIN CAMBIO     
+solver                    lbfgs                liblinear            MODIFICADO     
+
+RESUMEN DE CAMBIOS                                
+--------------------------------------------------
+Total de parámetros analizados: 4
+Parámetros modificados: 3
+Parámetros sin cambio: 1
+
+MEJORAS NUMÉRICAS PRINCIPALES:
+  • C: -90.0%
+  • max_iter: -50.0%
+
+ANÁLISIS ESPECÍFICO DEL MODELO                    
+--------------------------------------------------
+📊 LOGISTIC REGRESSION - Interpretación de cambios:
+  • C=0.1: Regularización fuerte (modelo más simple)
+  • penalty=l2: Ridge (reduce impacto de características)
+  • solver=liblinear: Optimizado para datasets pequeños
+
+================================================================================
+
+====================================================================================================
+TABLA RESUMEN DE HIPERPARÁMETROS OPTIMIZADOS - BREAST CANCER
+====================================================================================================
+
+Modelo               Mejor Score  Parámetros Optimizados                                      
+----------------------------------------------------------------------------------------------------
+RandomForest         0.9684       bootstrap=False, max_depth=10, min_samples_leaf=1, m...     
+SVM                  0.9772       C=10, degree=2, gamma=scale, kernel=rbf                     
+LogisticRegression   0.9807       C=0.1, max_iter=1000, penalty=l2, solver=liblinear          
+
+ANÁLISIS DE PATRONES COMUNES                      
+--------------------------------------------------
+• Valor promedio de C (regularización): 5.05
+  → Los modelos prefieren regularización débil (modelos más complejos)
+• Kernel SVM seleccionado: rbf
+  → Los datos requieren separación no lineal
+• Número de árboles en Random Forest: 100
+  → Balance óptimo entre precisión y velocidad
+
+====================================================================================================
+
+======================================================================================================================================================
+                                                          ¡ANÁLISIS COMPLETADO EXITOSAMENTE!                                                          
+======================================================================================================================================================

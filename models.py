@@ -11,6 +11,8 @@ import warnings
 import os
 import sys
 from datetime import datetime
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Suprimir TODOS los warnings de manera más agresiva
 warnings.filterwarnings('ignore')
@@ -64,6 +66,55 @@ class OutputLogger:
             self.log_file.flush()
 
 
+def plot_predictions_vs_actual(y_true, y_pred, model_name, dataset_name, save_plot=True):
+    """
+    Crea una gráfica que compara las predicciones del modelo con los valores reales
+    
+    Args:
+        y_true: Valores reales del target
+        y_pred: Predicciones del modelo
+        model_name: Nombre del modelo para el título
+        dataset_name: Nombre del dataset para el título
+        save_plot: Si guardar la gráfica en archivo
+    """
+    # Configurar el estilo de la gráfica
+    plt.style.use('default')
+    sns.set_palette("husl")
+    
+    # Crear la figura
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Crear índices para el eje x
+    indices = range(len(y_true))
+    
+    # Graficar valores reales y predicciones
+    ax.plot(indices, y_true, 'o-', label='Valores Reales', alpha=0.7, linewidth=2, markersize=4)
+    ax.plot(indices, y_pred, 's-', label='Predicciones', alpha=0.7, linewidth=2, markersize=4)
+    
+    # Configurar la gráfica
+    ax.set_xlabel('Índice de Muestra', fontsize=12)
+    ax.set_ylabel('Valor de Clase', fontsize=12)
+    ax.set_title(f'{model_name} - {dataset_name}\nPredicciones vs Valores Reales', fontsize=14, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.grid(True, alpha=0.3)
+    
+    # Ajustar layout
+    plt.tight_layout()
+    
+    # Guardar la gráfica si se solicita
+    if save_plot:
+        filename = f"{model_name.lower().replace(' ', '_')}_{dataset_name.lower()}_predictions.png"
+        plt.savefig(filename, dpi=300, bbox_inches='tight')
+        print(f"Gráfica guardada como: {filename}")
+    
+    # Mostrar la gráfica
+    plt.show()
+    
+    # Calcular y mostrar métricas de precisión
+    accuracy = accuracy_score(y_true, y_pred)
+    print(f"Precisión del modelo {model_name}: {accuracy:.4f}")
+
+
 class MLModelTrainer:
     def __init__(self, data, target_name):
         """
@@ -105,7 +156,7 @@ class MLModelTrainer:
             }
         }
 
-    def train_and_evaluate(self):
+    def train_and_evaluate(self, dataset_name="Dataset", show_plots=True):
         """Entrena y evalúa todos los modelos"""
         X_train, X_test, y_train, y_test = train_test_split(
             self.X, self.y, test_size=0.2, random_state=42
@@ -126,6 +177,11 @@ class MLModelTrainer:
             print(f"\n=== {name} ===")
             print(f"Accuracy: {acc:.4f}")
             print(classification_report(y_test, y_pred))
+            
+            # Crear gráfica de predicciones vs valores reales
+            if show_plots:
+                print(f"\nGenerando gráfica para {name}...")
+                plot_predictions_vs_actual(y_test, y_pred, name, dataset_name)
         return results
 
     def cross_validate_models(self, cv_folds=FOLDS, use_stratified=True):
@@ -253,12 +309,14 @@ class MLModelTrainer:
         
         return grid_results
 
-    def compare_evaluation_methods(self, cv_folds=FOLDS):
+    def compare_evaluation_methods(self, cv_folds=FOLDS, dataset_name="Dataset", show_plots=True):
         """
         Compara la evaluación simple vs validación cruzada
         
         Args:
             cv_folds (int): Número de folds para la validación cruzada
+            dataset_name (str): Nombre del dataset para las gráficas
+            show_plots (bool): Si mostrar las gráficas de predicciones
         """
         print(f"\n{'='*60}")
         print("COMPARACIÓN: EVALUACIÓN SIMPLE vs VALIDACIÓN CRUZADA")
@@ -266,7 +324,7 @@ class MLModelTrainer:
         
         # Evaluación simple
         print("\n1. EVALUACIÓN SIMPLE (Train/Test Split):")
-        simple_results = self.train_and_evaluate()
+        simple_results = self.train_and_evaluate(dataset_name, show_plots)
         
         # Validación cruzada
         print(f"\n2. VALIDACIÓN CRUZADA ({cv_folds} folds):")
@@ -331,7 +389,7 @@ class MLModelTrainer:
         return base_cv_results, grid_results
 
 
-def run_iris():
+def run_iris(show_plots=True):
     iris = load_iris(as_frame=True)
     df = iris.frame
     trainer = MLModelTrainer(df, "target")
@@ -341,7 +399,7 @@ def run_iris():
     print("#"*WIDTH_BETWEEN_DATASETS)
     print()
     # Comparar métodos de evaluación
-    simple_results, cv_results = trainer.compare_evaluation_methods()
+    simple_results, cv_results = trainer.compare_evaluation_methods(dataset_name="Iris", show_plots=show_plots)
     
     # Comparar modelos base vs optimizados
     base_cv_results, grid_results = trainer.compare_base_vs_optimized()
@@ -349,7 +407,7 @@ def run_iris():
     return simple_results, cv_results, base_cv_results, grid_results
 
 
-def run_wine():
+def run_wine(show_plots=True):
     wine = load_wine(as_frame=True)
     df = wine.frame
     trainer = MLModelTrainer(df, "target")
@@ -359,7 +417,7 @@ def run_wine():
     print("#"*WIDTH_BETWEEN_DATASETS)
     print()
     # Comparar métodos de evaluación
-    simple_results, cv_results = trainer.compare_evaluation_methods()
+    simple_results, cv_results = trainer.compare_evaluation_methods(dataset_name="Wine", show_plots=show_plots)
     
     # Comparar modelos base vs optimizados
     base_cv_results, grid_results = trainer.compare_base_vs_optimized()
@@ -367,7 +425,7 @@ def run_wine():
     return simple_results, cv_results, base_cv_results, grid_results
 
 
-def run_breast_cancer():
+def run_breast_cancer(show_plots=True):
     cancer = load_breast_cancer(as_frame=True)
     df = cancer.frame
     trainer = MLModelTrainer(df, "target")
@@ -378,7 +436,7 @@ def run_breast_cancer():
     print()
     
     # Comparar métodos de evaluación
-    simple_results, cv_results = trainer.compare_evaluation_methods()
+    simple_results, cv_results = trainer.compare_evaluation_methods(dataset_name="Breast Cancer", show_plots=show_plots)
     
     # Comparar modelos base vs optimizados
     base_cv_results, grid_results = trainer.compare_base_vs_optimized()
@@ -386,7 +444,7 @@ def run_breast_cancer():
     return simple_results, cv_results, base_cv_results, grid_results
 
 
-def run_custom_validation(dataset_name, data, target_name, cv_folds=FOLDS):
+def run_custom_validation(dataset_name, data, target_name, cv_folds=FOLDS, show_plots=True):
     """
     Función genérica para ejecutar validación cruzada en cualquier dataset
     
@@ -395,6 +453,7 @@ def run_custom_validation(dataset_name, data, target_name, cv_folds=FOLDS):
         data (pd.DataFrame): DataFrame con los datos
         target_name (str): Nombre de la columna objetivo
         cv_folds (int): Número de folds para validación cruzada
+        show_plots (bool): Si mostrar las gráficas de predicciones
     """
     trainer = MLModelTrainer(data, target_name)
     print()
@@ -404,7 +463,7 @@ def run_custom_validation(dataset_name, data, target_name, cv_folds=FOLDS):
     print()
     
     # Comparar métodos de evaluación
-    simple_results, cv_results = trainer.compare_evaluation_methods(cv_folds=cv_folds)
+    simple_results, cv_results = trainer.compare_evaluation_methods(cv_folds=cv_folds, dataset_name=dataset_name, show_plots=show_plots)
     
     # Comparar modelos base vs optimizados
     base_cv_results, grid_results = trainer.compare_base_vs_optimized(cv_folds)
@@ -435,13 +494,14 @@ def run_grid_search_only(dataset_name, data, target_name, cv_folds=FOLDS):
     return grid_results
 
 
-def run_with_logging(filename=None, save_to_file=True):
+def run_with_logging(filename=None, save_to_file=True, show_plots=True):
     """
     Ejecuta el análisis completo con opción de guardar en archivo
     
     Args:
         filename (str): Nombre del archivo de salida (opcional)
         save_to_file (bool): Si guardar la salida en archivo
+        show_plots (bool): Si mostrar las gráficas de predicciones
     """
     if save_to_file:
         logger = OutputLogger(filename)
@@ -454,9 +514,9 @@ def run_with_logging(filename=None, save_to_file=True):
         print("="*WIDTH_BETWEEN_DATASETS)
         print()
         
-        run_iris()
-        run_wine()
-        run_breast_cancer()
+        run_iris(show_plots=show_plots)
+        run_wine(show_plots=show_plots)
+        run_breast_cancer(show_plots=show_plots)
         
         print("\n" + "="*WIDTH_BETWEEN_DATASETS)
         print("¡ANÁLISIS COMPLETADO EXITOSAMENTE!".center(WIDTH_BETWEEN_DATASETS))
@@ -472,5 +532,10 @@ def run_with_logging(filename=None, save_to_file=True):
 
 
 if __name__ == "__main__":
-    # Ejecutar con logging automático
-    run_with_logging()
+    # Ejecutar con gráficas por defecto
+    run_with_logging(show_plots=True)
+    
+    # Ejemplos de uso individual:
+    # run_iris(show_plots=True)  # Solo Iris con gráficas
+    # run_wine(show_plots=False)  # Solo Wine sin gráficas
+    # run_breast_cancer(show_plots=True)  # Solo Breast Cancer con gráficas
